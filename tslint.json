@@ -1,0 +1,16 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules": {
+    "variable-name": false,
+    "no-shadowed-variable": false,
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "no-var-requires": false,
+    "no-empty": false
+  },
+  "linterOptions": {
+    "exclude": [
+      "test"
+    ]
+  }
+}
