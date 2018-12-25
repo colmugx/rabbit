@@ -1,2 +1,5 @@
-export { default as rabbit } from '../core'
+import rabbit from '../core'
 export { inject } from './decorator'
+
+export default rabbit
+export { rabbit }
