@@ -2,8 +2,12 @@ import { AnyAction, Dispatch, ReducersMapObject } from 'redux'
 import { mergeReducer } from './reducer'
 import { assert, isObject } from './utils'
 
+interface EffectsType {
+  dispatch: Dispatch<AnyAction>,
+  select: (state: any) => void
+}
 export interface EffectsMapObject {
-  [key: string]: (action: AnyAction, effect: Dispatch) => void
+  [key: string]: (action: AnyAction, effect: EffectsType) => void
 }
 
 export interface Model {

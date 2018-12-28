@@ -3,7 +3,7 @@ import { EffectsMapObject } from './model'
 import { prefix } from './utils'
 
 export default function(effects: EffectsMapObject): Middleware {
-  return ({ dispatch }: MiddlewareAPI) => (next: Dispatch) => async action => {
+  return ({ dispatch, getState }: MiddlewareAPI) => (next: Dispatch) => async action => {
     const { type } = action
     const handler = effects[type]
     if (typeof handler !== 'function') {
@@ -12,7 +12,10 @@ export default function(effects: EffectsMapObject): Middleware {
     const [ ns ] = prefix(type).length > 1 ? prefix(type) : [undefined]
     if (!ns) { return }
     await dispatch({ type: `${ns}/@@start`})
-    const effect = await handler(action, _dispatch(ns))
+    const effect = await handler(action, {
+      dispatch: _dispatch(ns),
+      select: select()
+    })
     await dispatch({ type: `${ns}/@@end`})
     Promise.resolve(effect)
 
@@ -25,6 +28,15 @@ export default function(effects: EffectsMapObject): Middleware {
         return dispatch({ ...action, type: `${ns}/${type}` })
       }
     }
-  }
 
+    function select() {
+      const state = getState()
+      return (cb: string & ((state: any) => void)) => {
+        if (typeof cb === 'string' && state[cb]) {
+          return state[cb]
+        }
+        return cb(state)
+      }
+    }
+  }
 }
