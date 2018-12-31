@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowJs": true,
     "outDir": "./lib",
+    "target": "es5",
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
@@ -11,5 +12,8 @@
     ],
     "moduleResolution": "node",
     "jsx": "react"
-  }
+  },
+  "exclude": [
+    "test"
+  ]
 }
