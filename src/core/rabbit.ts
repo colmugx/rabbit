@@ -3,18 +3,25 @@ import createStore from './createStore'
 import { createModel, Model, Modules } from './model'
 import { reduceObj } from './utils'
 
-export default function rabbit(models: Model[], options: any = {}): Store {
+export interface RStore extends Store {
+  effects: any
+}
+
+export default function rabbit(models: Model[], options: any = {}): RStore {
   const initialModels = []
 
   const _models = createModel(models)
+  const _effects = getEffects(_models)
 
   const store = createStore({
     reducers: getReducers(_models),
-    effects: getEffects(_models),
+    effects: _effects,
     initialState: {},
   })
 
-  return store
+  const newStore = {...store, effects: _effects }
+
+  return newStore
 
   function getReducers(models: Modules): Reducer {
     const reducers = reduceObj(models)((prev, name) => ({
