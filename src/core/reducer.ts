@@ -18,7 +18,7 @@ export function mergeReducer(model: Model, type: 'reducers' | 'effects') {
 
       return {
         ...prev,
-        [type]: reducer,
+        [type]: reducer
       }
     })
 

@@ -3,7 +3,7 @@ import { mergeReducer } from './reducer'
 import { assert, isObject } from './utils'
 
 interface EffectsType {
-  dispatch: Dispatch<AnyAction>,
+  dispatch: Dispatch<AnyAction>
   select: (state: any) => void
 }
 export interface EffectsMapObject {
@@ -25,7 +25,7 @@ export function checkModel(model: Model, prevModel: Model[]): void {
   const { name, reducers, effects } = model
   assert(
     name && typeof name === 'string',
-    `名称必须被创建且必须是 string，但得到${typeof name}`,
+    `名称必须被创建且必须是 string，但得到${typeof name}`
   )
   // 不可重复
   assert(!prevModel.some(model => model.name === name), 'model 名称重复')
@@ -51,9 +51,9 @@ export function createModel(models: any[]): Modules {
   const modules: Modules = _models.reduce(
     (prev, model: Model) => ({
       ...prev,
-      [model.name]: model,
+      [model.name]: model
     }),
-    {},
+    {}
   )
 
   return modules

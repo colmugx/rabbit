@@ -16,17 +16,17 @@ export default function rabbit(models: Model[], options: any = {}): RStore {
   const store = createStore({
     reducers: getReducers(_models),
     effects: _effects,
-    initialState: {},
+    initialState: {}
   })
 
-  const newStore = {...store, effects: _effects }
+  const newStore = { ...store, effects: _effects }
 
   return newStore
 
   function getReducers(models: Modules): Reducer {
     const reducers = reduceObj(models)((prev, name) => ({
       ...prev,
-      [name]: models[name].reducers,
+      [name]: models[name].reducers
     }))
     const rootReducers = combineReducers(reducers)
     return rootReducers
@@ -35,7 +35,7 @@ export default function rabbit(models: Model[], options: any = {}): RStore {
   function getEffects(models: Modules) {
     const effects = reduceObj(models)((prev, name) => ({
       ...prev,
-      ...models[name].effects,
+      ...models[name].effects
     }))
     return effects
   }

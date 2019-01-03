@@ -3,7 +3,7 @@ import {
   compose,
   createStore,
   Middleware,
-  Reducer,
+  Reducer
 } from 'redux'
 import RThunk from 'redux-thunk'
 import CreateEffect from './effect'
@@ -16,9 +16,11 @@ export interface ICreate {
 }
 
 export default function({ reducers, effects, initialState }: ICreate) {
-  const composeEnhancers = typeof window === 'object' && (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose
+  const composeEnhancers =
+    typeof window === 'object' &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+      : compose
 
   const middlewares: Middleware[] = [CreateEffect(effects), RThunk]
 

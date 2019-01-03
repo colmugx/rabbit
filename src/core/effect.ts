@@ -3,21 +3,29 @@ import { EffectsMapObject } from './model'
 import { prefix } from './utils'
 
 export default function(effects: EffectsMapObject): Middleware {
-  return ({ dispatch, getState }: MiddlewareAPI) => (next: Dispatch) => async action => {
-    const { type } = action
-    const handler = effects[type]
-    if (typeof handler !== 'function') {
-      return next(action)
+  return ({ dispatch, getState }: MiddlewareAPI) => (
+    next: Dispatch
+  ) => async action => {
+    try {
+      const { type } = action
+      const handler = effects[type]
+      if (typeof handler !== 'function') {
+        return next(action)
+      }
+      const [ns] = prefix(type).length > 1 ? prefix(type) : [undefined]
+      if (!ns) {
+        return
+      }
+      await dispatch({ type: `${ns}/@@start` })
+      const effect = await handler(action, {
+        dispatch: _dispatch(ns),
+        select: select()
+      })
+      await dispatch({ type: `${ns}/@@end` })
+      return effect
+    } catch (err) {
+      throw err
     }
-    const [ ns ] = prefix(type).length > 1 ? prefix(type) : [undefined]
-    if (!ns) { return }
-    await dispatch({ type: `${ns}/@@start`})
-    const effect = await handler(action, {
-      dispatch: _dispatch(ns),
-      select: select()
-    })
-    await dispatch({ type: `${ns}/@@end`})
-    Promise.resolve(effect)
 
     function _dispatch(ns?: string) {
       if (!ns) {
