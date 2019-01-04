@@ -8,9 +8,9 @@ export interface RStore extends Store {
 }
 
 export default function rabbit(models: Model[], options: any = {}): RStore {
-  const initialModels = []
+  const initialModels: Model[] = []
 
-  const _models = createModel(models)
+  const _models = createModel(initialModels.concat(models))
   const _effects = getEffects(_models)
 
   const store = createStore({

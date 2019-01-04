@@ -1,8 +1,6 @@
 import { Action, ReducersMapObject } from 'redux'
 import { EffectsMapObject, Model } from './model'
-import { reduceObj } from './utils'
-
-const CHILD_SIGN = '/'
+import { CHILD_SIGN, reduceObj } from './utils'
 
 export function mergeReducer(model: Model, type: 'reducers' | 'effects') {
   const name = model.name
@@ -32,7 +30,7 @@ export function mergeReducer(model: Model, type: 'reducers' | 'effects') {
   }
 }
 
-function createReducer(initState, handlers = {}) {
+function createReducer(initState: any, handlers = {}) {
   return (state = initState, action: Action) => {
     const { type } = action
     if (type in handlers) {

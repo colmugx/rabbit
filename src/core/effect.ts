@@ -1,6 +1,6 @@
 import { Dispatch, Middleware, MiddlewareAPI } from 'redux'
 import { EffectsMapObject } from './model'
-import { prefix } from './utils'
+import { CHILD_SIGN, prefix } from './utils'
 
 export default function(effects: EffectsMapObject): Middleware {
   return ({ dispatch, getState }: MiddlewareAPI) => (
@@ -16,12 +16,12 @@ export default function(effects: EffectsMapObject): Middleware {
       if (!ns) {
         return
       }
-      await dispatch({ type: `${ns}/@@start` })
+      await dispatch({ type: `${ns}${CHILD_SIGN}@@start` })
       const effect = await handler(action, {
         dispatch: _dispatch(ns),
         select: select()
       })
-      await dispatch({ type: `${ns}/@@end` })
+      await dispatch({ type: `${ns}${CHILD_SIGN}@@end` })
       return effect
     } catch (err) {
       throw err
@@ -33,7 +33,7 @@ export default function(effects: EffectsMapObject): Middleware {
       }
       return action => {
         const { type } = action
-        return dispatch({ ...action, type: `${ns}/${type}` })
+        return dispatch({ ...action, type: `${ns}${CHILD_SIGN}${type}` })
       }
     }
 
