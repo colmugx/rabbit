@@ -1,5 +1,6 @@
 export const CHILD_SIGN = '/'
-export { isPlainObject as isObject } from 'lodash'
+const isObject = require('lodash/isPlainObject')
+export { isObject }
 export const noop = () => {}
 export const assert = (condition, msg) => {
   if (!condition) {

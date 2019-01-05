@@ -6,7 +6,8 @@
   "module": "lib/rabbit.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "precommit": "lint-staged"
   },
   "keywords": [
     "redux"
@@ -15,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/react-redux": "^6.0.11",
-    "is-plain-object": "^2.0.4",
     "lodash": "^4.17.11",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
@@ -30,6 +30,7 @@
     "lint-staged": "^8.1.0",
     "prettier": "^1.15.3",
     "rollup": "^0.68.2",
+    "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-typescript2": "^0.18.1",
@@ -38,7 +39,7 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",
     "tslint-react": "^3.6.0",
-    "typescript": "^3.2.1",
+    "typescript": "^3.2.2",
     "uglify-es": "^3.3.9"
   },
   "lint-staged": {
