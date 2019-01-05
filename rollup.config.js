@@ -1,31 +1,68 @@
-import typescript from 'rollup-plugin-typescript2'
+import typescript from 'typescript'
+import RollTS from 'rollup-plugin-typescript2'
 import resolve from 'rollup-plugin-node-resolve'
 import replace from 'rollup-plugin-replace'
+import { uglify } from 'rollup-plugin-uglify'
+import commonjs from 'rollup-plugin-commonjs'
+import { minify } from 'uglify-es'
 
 const pkg = require('./package.json')
 
 const pluginConf = [
-  typescript({
-    typescript: require('typescript')
-  }),
+  RollTS({ typescript }),
   replace({
 		'process.env.NODE_ENV': "'production'",
 	}),
-	resolve()
+  resolve(),
+  commonjs()
 ]
 
-export default {
+const umdProduction = {
   input: 'src/core/index.ts',
-  plugins: pluginConf,
+  plugins: pluginConf.concat([
+    uglify({
+			compress: {
+				pure_getters: true
+			},
+			output: {
+				comments: false
+			},
+		}, minify)
+  ]),
   output: [
     {
-      file: pkg.main,
-      format: 'cjs'
-    },
-    {
-      file: 'lib/rabbit.umd.js',
+      file: 'lib/umd/rabbit.umd.js',
       name: 'Rabbit',
       format: 'umd'
     }
   ]
 }
+
+const production = {
+  input: 'src/rabbit/index.ts',
+  plugins: pluginConf,
+  output: {
+    file: pkg.module,
+    format: 'es'
+  }
+}
+
+const cjsProduction = {
+  ...production,
+  plugins: pluginConf.concat([
+    uglify({
+			compress: {
+				pure_getters: true
+			},
+			output: {
+				comments: false
+			},
+		}, minify)
+  ]),
+  output: {
+    file: pkg.main,
+    format: 'cjs'
+  }
+}
+
+export default [ production, cjsProduction, umdProduction ]
