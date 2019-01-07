@@ -11,18 +11,18 @@ export default function rabbit(models: Model[], options: any = {}): RStore {
   const initialModels: Model[] = []
 
   const _models = createModel(initialModels.concat(models))
-  const _effects = getEffects(_models)
+  const effects = getEffects(_models)
 
   const store = createStore(
     {
       reducers: getReducers(_models),
-      effects: _effects,
+      effects,
       initialState: {}
     },
     options
   )
 
-  const newStore = { ...store, effects: _effects }
+  const newStore = { ...store, effects }
 
   return newStore
 

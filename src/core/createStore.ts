@@ -6,7 +6,7 @@ import {
   Reducer
 } from 'redux'
 import RThunk from 'redux-thunk'
-import CreateEffect from './effect'
+import createEffect from './effect'
 import { EffectsMapObject } from './model'
 
 export interface ICreate {
@@ -29,7 +29,7 @@ export default function(
       ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
       : compose
 
-  const middlewares: Middleware[] = [CreateEffect(effects), RThunk]
+  const middlewares: Middleware[] = [createEffect(effects), RThunk]
   if (options.middleware) {
     middlewares.push(...options.middleware)
   }
