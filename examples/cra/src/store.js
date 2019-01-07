@@ -21,7 +21,7 @@ const models = [
       decrement({ payload = -1 }, { dispatch }) {
         dispatch({ type: 'update', payload })
       },
-      async asyncIncrement(action, { dispatch }) {
+      async asyncIncrement(_, { dispatch }) {
         await new Promise(resolve => {
           setTimeout(resolve, 1000)
         })
