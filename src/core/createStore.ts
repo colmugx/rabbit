@@ -34,10 +34,6 @@ export default function(
     middlewares.push(...options.middleware)
   }
 
-  if (process.env.NODE_ENV === 'development') {
-    middlewares.push(require('redux-logger').createLogger())
-  }
-
   const enhancers: any[] = [applyMiddleware(...middlewares)]
 
   return createStore(reducers, initialState, composeEnhancers(...enhancers))
