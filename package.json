@@ -2,11 +2,10 @@
   "name": "rabbit",
   "version": "0.0.1",
   "description": "Redux Tool",
-  "main": "lib/cjs/rabbit.js",
-  "module": "lib/rabbit.js",
+  "main": "lib/rabbit/index.js",
   "scripts": {
     "test": "jest",
-    "build": "rollup -c",
+    "build": "tsc",
     "precommit": "lint-staged"
   },
   "keywords": [
@@ -19,7 +18,6 @@
     "lodash": "^4.17.11",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1",
-    "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
