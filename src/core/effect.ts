@@ -16,12 +16,16 @@ export default function(effects: EffectsMapObject): Middleware {
       if (!ns) {
         return
       }
-      await dispatch({ type: `${ns}${CHILD_SIGN}@@start` })
+      await dispatch({
+        type: `${ns}${CHILD_SIGN}${handler.name}${CHILD_SIGN}@@start`
+      })
       const effect = await handler(action, {
         dispatch: _dispatch(ns),
         select: select()
       })
-      await dispatch({ type: `${ns}${CHILD_SIGN}@@end` })
+      await dispatch({
+        type: `${ns}${CHILD_SIGN}${handler.name}${CHILD_SIGN}@@end`
+      })
       return effect
     } catch (err) {
       throw err
