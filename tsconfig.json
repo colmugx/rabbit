@@ -5,6 +5,7 @@
     "target": "es5",
     "strictNullChecks": true,
     "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "es2016",
@@ -13,6 +14,9 @@
     "moduleResolution": "node",
     "jsx": "react"
   },
+  "include": [
+    "src/**/*"
+  ],
   "exclude": [
     "test"
   ]
