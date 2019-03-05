@@ -14,19 +14,22 @@ export const inject = (namespace: string, connect: Connect, store?: RStore) => {
   )
 
   const mapDispatchToProps = (dispatch: Dispatch) => {
-    return effects.reduce((com, item) => {
-      const fnName = item.split('/')[1]
-      const fn = (rest: object | string) =>
-        dispatch(
-          typeof rest === 'string'
-            ? { type: item, payload: rest }
-            : { type: item, ...rest }
-        )
-      return {
-        ...com,
-        [fnName]: fn
-      }
-    }, {})
+    return effects.reduce(
+      (com, item) => {
+        const fnName = item.split('/')[1]
+        const fn = (rest: object | string) =>
+          dispatch(
+            typeof rest === 'string'
+              ? { type: item, payload: rest }
+              : { type: item, ...rest }
+          )
+        return {
+          ...com,
+          [fnName]: fn
+        }
+      },
+      { dispatch }
+    )
   }
 
   return Component => {
