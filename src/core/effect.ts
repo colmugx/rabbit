@@ -13,9 +13,6 @@ export default function(effects: EffectsMapObject): Middleware {
         return next(action)
       }
       const [ns] = prefix(type).length > 1 ? prefix(type) : [undefined]
-      if (!ns) {
-        return
-      }
       await dispatch({
         type: `${ns}${CHILD_SIGN}${handler.name}${CHILD_SIGN}@@start`
       })
@@ -37,7 +34,7 @@ export default function(effects: EffectsMapObject): Middleware {
       }
       return action => {
         const { type } = action
-        return dispatch({ ...action, type: `${ns}${CHILD_SIGN}${type}` })
+        return dispatch({ ...action, type: prefixType(type, ns, effects) })
       }
     }
 
@@ -49,6 +46,13 @@ export default function(effects: EffectsMapObject): Middleware {
         }
         return cb(state)
       }
+    }
+
+    function prefixType(type: string, ns: string, effects: EffectsMapObject) {
+      const prefixType = `${ns}${CHILD_SIGN}${type}`
+      const isSign = /\/@@[^/]+?$/.test(type)
+
+      return isSign || effects[type] ? type : prefixType
     }
   }
 }
