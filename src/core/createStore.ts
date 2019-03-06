@@ -3,7 +3,8 @@ import {
   compose,
   createStore,
   Middleware,
-  Reducer
+  Reducer,
+  StoreEnhancer
 } from 'redux'
 import RThunk from 'redux-thunk'
 import createEffect from './effect'
@@ -34,7 +35,7 @@ export default function(
     middlewares.push(...options.middleware)
   }
 
-  const enhancers: any[] = [applyMiddleware(...middlewares)]
+  const enhancers: StoreEnhancer[] = [applyMiddleware(...middlewares)]
 
   return createStore(reducers, initialState, composeEnhancers(...enhancers))
 }
