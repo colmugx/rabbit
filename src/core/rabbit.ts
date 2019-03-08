@@ -9,8 +9,17 @@ export interface RStore extends Store {
 
 export default function rabbit(models: Model[], options: any = {}): RStore {
   const initialModels: Model[] = []
+  const initModel = {
+    name: '@@rabbit',
+    state: 0,
+    reducers: {
+      UPDATE(state) {
+        return state + 1
+      }
+    }
+  }
 
-  const _models = createModel(initialModels.concat(models))
+  const _models = createModel(initialModels.concat(initModel, models))
   const effects = getEffects(_models)
 
   const store = createStore(
@@ -22,6 +31,8 @@ export default function rabbit(models: Model[], options: any = {}): RStore {
     options
   )
 
+  // 初始化通知
+  store.dispatch({ type: '@rabbit/init' })
   const newStore = { ...store, effects }
 
   return newStore

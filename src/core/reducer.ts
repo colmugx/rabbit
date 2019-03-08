@@ -5,7 +5,7 @@ import { CHILD_SIGN, reduceObj } from './utils'
 export function mergeReducer(model: Model, type: 'reducers' | 'effects') {
   const name = model.name
   const _reducers = model[type]
-  const _state = model.state
+  const _state = model.state || {}
 
   if (_reducers) {
     const reducers = reduceObj(_reducers as
