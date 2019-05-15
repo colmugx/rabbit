@@ -1,3 +1,3 @@
-import rabbit from './rabbit'
+import reabit from './reabit'
 
-export default rabbit
+export default reabit

@@ -1,4 +1,4 @@
-# rabbit
+# reabit
 Redux Framework, Simple Encapsulation.
 
 对 Redux 简单封装，尽量减少配置痛苦

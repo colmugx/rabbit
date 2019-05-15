@@ -1,8 +1,8 @@
 {
-  "name": "rabbit",
-  "version": "0.0.1",
+  "name": "reabit",
+  "version": "0.0.1-alpha0",
   "description": "Redux Tool",
-  "main": "lib/rabbit/index.js",
+  "main": "lib/reabit/index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc",
@@ -14,6 +14,12 @@
   ],
   "author": "colmugx",
   "license": "MIT",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.d.ts",
+    "lib/"
+  ],
   "dependencies": {
     "@types/react-redux": "^6.0.11",
     "lodash": "^4.17.11",

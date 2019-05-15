@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 import { Connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { RStore } from '../core/rabbit'
+import { RStore } from '../core/reabit'
 
 interface DefaultProp {
   dispatch: Dispatch
